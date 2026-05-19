@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人主页</title>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      color: #1a1a2e;
+      background: #fafafa;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* Container */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+      z-index: 100; border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    nav .container {
+      display: flex; justify-content: space-between; align-items: center;
+      height: 60px;
+    }
+    nav .logo {
+      font-weight: 700; font-size: 1.2rem;
+      letter-spacing: -.5px;
+    }
+    nav .logo span { color: #5b5bd6; }
+    nav ul { display: flex; gap: 32px; list-style: none; }
+    nav ul a {
+      font-size: .9rem; color: #555; transition: color .2s;
+    }
+    nav ul a:hover { color: #5b5bd6; }
+
+    /* Sections general */
+    section { padding: 100px 0; }
+    .section-title {
+      font-size: 2rem; font-weight: 700; margin-bottom: 48px;
+      letter-spacing: -.5px;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 40px; height: 3px;
+      background: #5b5bd6; margin-top: 12px; border-radius: 2px;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 60px;
+    }
+    .hero-content { max-width: 680px; }
+    .hero-subtitle {
+      font-size: 1rem; color: #5b5bd6; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 3.5rem; font-weight: 800; line-height: 1.15;
+      letter-spacing: -1.5px; margin-bottom: 20px;
+    }
+    .hero h1 span { color: #5b5bd6; }
+    .hero p {
+      font-size: 1.15rem; color: #666; max-width: 520px;
+      margin-bottom: 36px;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 12px 32px; border-radius: 8px;
+      font-weight: 600; font-size: .95rem; transition: all .25s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: #5b5bd6; color: #fff;
+    }
+    .btn-primary:hover { background: #4a4abf; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(91,91,214,.3); }
+    .btn-outline {
+      background: transparent; color: #1a1a2e; border: 1.5px solid #ddd;
+    }
+    .btn-outline:hover { border-color: #5b5bd6; color: #5b5bd6; transform: translateY(-2px); }
+
+    /* About */
+    .about { background: #fff; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center;
+    }
+    .about-avatar {
+      width: 100%; aspect-ratio: 1; border-radius: 16px;
+      background: linear-gradient(135deg, #5b5bd6 0%, #8b8bf0 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; color: #fff; font-weight: 300;
+      max-width: 400px;
+    }
+    .about-text h3 { font-size: 1.5rem; margin-bottom: 16px; }
+    .about-text p { color: #666; margin-bottom: 16px; font-size: 1.05rem; }
+    .about-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .about-info-item dt { font-size: .8rem; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+    .about-info-item dd { font-weight: 600; margin-top: 2px; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px;
+    }
+    .skill-card {
+      background: #fff; padding: 24px 16px; border-radius: 12px;
+      text-align: center; border: 1px solid #f0f0f0;
+      transition: all .25s;
+    }
+    .skill-card:hover { border-color: #5b5bd6; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.06); }
+    .skill-icon { font-size: 2rem; margin-bottom: 8px; }
+    .skill-card h4 { font-size: .9rem; font-weight: 600; }
+    .skill-level {
+      margin-top: 8px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden;
+    }
+    .skill-level-bar { height: 100%; background: #5b5bd6; border-radius: 2px; }
+
+    /* Projects */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;
+    }
+    .project-card {
+      background: #fff; border-radius: 14px; overflow: hidden;
+      border: 1px solid #f0f0f0; transition: all .25s;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
+    .project-cover {
+      height: 200px; background: linear-gradient(135deg, #5b5bd6, #b8b8ff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: #fff;
+    }
+    .project-body { padding: 24px; }
+    .project-body h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .project-body p { color: #666; font-size: .9rem; margin-bottom: 16px; line-height: 1.5; }
+    .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .project-tags span {
+      background: #f0f0ff; color: #5b5bd6; padding: 4px 12px;
+      border-radius: 20px; font-size: .8rem; font-weight: 500;
+    }
+
+    /* Contact */
+    .contact { background: #fff; }
+    .contact-content { max-width: 560px; }
+    .contact-content p { color: #666; font-size: 1.05rem; margin-bottom: 32px; }
+    .contact-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px;
+      background: #f5f5f5; color: #333; font-weight: 500;
+      transition: all .25s; font-size: .95rem;
+    }
+    .contact-link:hover { background: #5b5bd6; color: #fff; transform: translateY(-2px); }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 40px 0; color: #999; font-size: .85rem;
+      border-top: 1px solid #eee;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .about-avatar { max-width: 240px; }
+      nav ul { gap: 16px; }
+      nav ul a { font-size: .8rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo"><span>&lt;</span>Home<span> /&gt;</span></a>
+      <ul>
+        <li><a href="#about">关于</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">项目</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-subtitle">Hi, I'm</div>
+        <h1>
+          <span>Your Name</span><br>
+          建造数字产品
+        </h1>
+        <p>
+          我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。
+          专注于 Web 开发、UI/UX 设计与性能优化。
+        </p>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">查看作品</a>
+          <a href="#contact" class="btn btn-outline">联系我</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2 class="section-title">关于我</h2>
+      <div class="about-grid">
+        <div class="about-avatar">YC</div>
+        <div class="about-text">
+          <h3>技术与创意的交汇点</h3>
+          <p>
+            我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。
+            我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。
+          </p>
+          <p>
+            工作之余，我喜欢写博客分享技术思考、参与开源项目，
+            以及探索摄影与设计带来的不同视角。
+          </p>
+          <dl class="about-info">
+            <div class="about-info-item">
+              <dt>姓名</dt>
+              <dd>Your Name</dd>
+            </div>
+            <div class="about-info-item">
+              <dt>所在地</dt>
+              <dd>中国 · 上海</dd>
+            </div>
+            <div class="about-info-item">
+              <dt>职业</dt>
+              <dd>全栈开发者</dd>
+            </div>
+            <div class="about-info-item">
+              <dt>邮箱</dt>
+              <dd>hello@example.com</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <h2 class="section-title">技能</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">⚛️</div>
+          <h4>React</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:90%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🟦</div>
+          <h4>TypeScript</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🔷</div>
+          <h4>Vue</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:80%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🟢</div>
+          <h4>Node.js</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🐍</div>
+          <h4>Python</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:75%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🗄️</div>
+          <h4>SQL</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:80%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">☁️</div>
+          <h4>AWS</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:70%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h4>Figma</h4>
+          <div class="skill-level"><div class="skill-level-bar" style="width:75%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <h2 class="section-title">项目</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-cover">📊</div>
+          <div class="project-body">
+            <h3>数据分析平台</h3>
+            <p>一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。</p>
+            <div class="project-tags">
+              <span>React</span><span>D3.js</span><span>WebSocket</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-cover">🛒</div>
+          <div class="project-body">
+            <h3>电商后台管理</h3>
+            <p>全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。</p>
+            <div class="project-tags">
+              <span>Vue</span><span>Node.js</span><span>MongoDB</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-cover">🤖</div>
+          <div class="project-body">
+            <h3>AI 助手工具</h3>
+            <p>集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。</p>
+            <div class="project-tags">
+              <span>Python</span><span>FastAPI</span><span>LLM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">联系我</h2>
+      <div class="contact-content">
+        <p>
+          如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。
+          我会尽快回复！
+        </p>
+        <div class="contact-links">
+          <a href="mailto:hello@example.com" class="contact-link">
+            ✉️ hello@example.com
+          </a>
+          <a href="#" class="contact-link">
+            💬 微信
+          </a>
+          <a href="https://github.com" target="_blank" class="contact-link">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      &copy; 2026 Your Name. Made with ❤️
+    </div>
+  </footer>
+
+  <!-- Smooth reveal on scroll -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: .1 });
+
+    document.querySelectorAll('section:not(.hero)').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity .6s ease-out, transform .6s ease-out';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
