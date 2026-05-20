@@ -3,21 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人主页</title>
+  <title id="page-title">个人主页</title>
   <style>
-    /* Reset & Base */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
-      color: #1a1a2e;
-      background: #fafafa;
-      line-height: 1.6;
+      color: #1a1a2e; background: #fafafa; line-height: 1.6;
     }
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-
-    /* Container */
     .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
     /* Nav */
@@ -27,25 +21,22 @@
       z-index: 100; border-bottom: 1px solid rgba(0,0,0,.06);
     }
     nav .container {
-      display: flex; justify-content: space-between; align-items: center;
-      height: 60px;
+      display: flex; justify-content: space-between; align-items: center; height: 60px;
     }
-    nav .logo {
-      font-weight: 700; font-size: 1.2rem;
-      letter-spacing: -.5px;
-    }
+    nav .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -.5px; }
     nav .logo span { color: #5b5bd6; }
-    nav ul { display: flex; gap: 32px; list-style: none; }
-    nav ul a {
-      font-size: .9rem; color: #555; transition: color .2s;
-    }
+    nav ul { display: flex; gap: 24px; list-style: none; align-items: center; }
+    nav ul a { font-size: .9rem; color: #555; transition: color .2s; }
     nav ul a:hover { color: #5b5bd6; }
+    .admin-link {
+      font-size: .8rem; color: #ccc !important; transition: color .2s;
+    }
+    .admin-link:hover { color: #5b5bd6 !important; }
 
-    /* Sections general */
+    /* Sections */
     section { padding: 100px 0; }
     .section-title {
-      font-size: 2rem; font-weight: 700; margin-bottom: 48px;
-      letter-spacing: -.5px;
+      font-size: 2rem; font-weight: 700; margin-bottom: 48px; letter-spacing: -.5px;
     }
     .section-title::after {
       content: ''; display: block; width: 40px; height: 3px;
@@ -53,10 +44,7 @@
     }
 
     /* Hero */
-    .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding-top: 60px;
-    }
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 60px; }
     .hero-content { max-width: 680px; }
     .hero-subtitle {
       font-size: 1rem; color: #5b5bd6; font-weight: 600;
@@ -67,37 +55,25 @@
       letter-spacing: -1.5px; margin-bottom: 20px;
     }
     .hero h1 span { color: #5b5bd6; }
-    .hero p {
-      font-size: 1.15rem; color: #666; max-width: 520px;
-      margin-bottom: 36px;
-    }
+    .hero p { font-size: 1.15rem; color: #666; max-width: 520px; margin-bottom: 36px; }
     .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
     .btn {
       display: inline-block; padding: 12px 32px; border-radius: 8px;
-      font-weight: 600; font-size: .95rem; transition: all .25s;
-      cursor: pointer; border: none;
+      font-weight: 600; font-size: .95rem; transition: all .25s; cursor: pointer; border: none;
     }
-    .btn-primary {
-      background: #5b5bd6; color: #fff;
-    }
+    .btn-primary { background: #5b5bd6; color: #fff; }
     .btn-primary:hover { background: #4a4abf; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(91,91,214,.3); }
-    .btn-outline {
-      background: transparent; color: #1a1a2e; border: 1.5px solid #ddd;
-    }
+    .btn-outline { background: transparent; color: #1a1a2e; border: 1.5px solid #ddd; }
     .btn-outline:hover { border-color: #5b5bd6; color: #5b5bd6; transform: translateY(-2px); }
 
     /* About */
     .about { background: #fff; }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-      align-items: center;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .about-avatar {
       width: 100%; aspect-ratio: 1; border-radius: 16px;
       background: linear-gradient(135deg, #5b5bd6 0%, #8b8bf0 100%);
       display: flex; align-items: center; justify-content: center;
-      font-size: 6rem; color: #fff; font-weight: 300;
-      max-width: 400px;
+      font-size: 6rem; color: #fff; font-weight: 300; max-width: 400px;
     }
     .about-text h3 { font-size: 1.5rem; margin-bottom: 16px; }
     .about-text p { color: #666; margin-bottom: 16px; font-size: 1.05rem; }
@@ -111,15 +87,12 @@
     }
     .skill-card {
       background: #fff; padding: 24px 16px; border-radius: 12px;
-      text-align: center; border: 1px solid #f0f0f0;
-      transition: all .25s;
+      text-align: center; border: 1px solid #f0f0f0; transition: all .25s;
     }
     .skill-card:hover { border-color: #5b5bd6; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.06); }
     .skill-icon { font-size: 2rem; margin-bottom: 8px; }
     .skill-card h4 { font-size: .9rem; font-weight: 600; }
-    .skill-level {
-      margin-top: 8px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden;
-    }
+    .skill-level { margin-top: 8px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden; }
     .skill-level-bar { height: 100%; background: #5b5bd6; border-radius: 2px; }
 
     /* Projects */
@@ -128,13 +101,13 @@
     }
     .project-card {
       background: #fff; border-radius: 14px; overflow: hidden;
-      border: 1px solid #f0f0f0; transition: all .25s;
+      border: 1px solid #f0f0f0; transition: all .25s; cursor: pointer;
     }
     .project-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
     .project-cover {
       height: 200px; background: linear-gradient(135deg, #5b5bd6, #b8b8ff);
       display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; color: #fff;
+      font-size: 3rem; color: #fff; position: relative;
     }
     .project-body { padding: 24px; }
     .project-body h3 { font-size: 1.15rem; margin-bottom: 8px; }
@@ -144,234 +117,304 @@
       background: #f0f0ff; color: #5b5bd6; padding: 4px 12px;
       border-radius: 20px; font-size: .8rem; font-weight: 500;
     }
+    .project-detail-btn {
+      display: inline-block; margin-top: 12px; font-size: .85rem;
+      color: #5b5bd6; font-weight: 500; transition: gap .2s;
+    }
+    .project-detail-btn:hover { gap: 4px; }
+
+    /* Project Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 200; justify-content: center; align-items: center;
+      padding: 24px; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff; border-radius: 16px; max-width: 640px; width: 100%;
+      max-height: 80vh; overflow-y: auto; padding: 40px; position: relative;
+      animation: modalIn .3s ease-out;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px; font-size: 1.5rem;
+      cursor: pointer; color: #999; transition: color .2s; background: none; border: none;
+    }
+    .modal-close:hover { color: #333; }
+    .modal-icon { font-size: 3rem; margin-bottom: 16px; }
+    .modal h2 { font-size: 1.5rem; margin-bottom: 12px; }
+    .modal .modal-tags { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .modal .modal-tags span {
+      background: #f0f0ff; color: #5b5bd6; padding: 4px 12px;
+      border-radius: 20px; font-size: .85rem; font-weight: 500;
+    }
+    .modal .modal-body { color: #555; font-size: 1rem; line-height: 1.8; white-space: pre-wrap; }
 
     /* Contact */
     .contact { background: #fff; }
     .contact-content { max-width: 560px; }
     .contact-content p { color: #666; font-size: 1.05rem; margin-bottom: 32px; }
-    .contact-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .contact-links { display: flex; gap: 16px; flex-wrap: wrap; }
     .contact-link {
-      display: flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 8px;
-      background: #f5f5f5; color: #333; font-weight: 500;
-      transition: all .25s; font-size: .95rem;
+      display: flex; align-items: center; gap: 8px; padding: 12px 24px;
+      border-radius: 8px; background: #f5f5f5; color: #333;
+      font-weight: 500; transition: all .25s; font-size: .95rem;
     }
     .contact-link:hover { background: #5b5bd6; color: #fff; transform: translateY(-2px); }
 
     /* Footer */
-    footer {
-      text-align: center; padding: 40px 0; color: #999; font-size: .85rem;
-      border-top: 1px solid #eee;
-    }
+    footer { text-align: center; padding: 40px 0; color: #999; font-size: .85rem; border-top: 1px solid #eee; }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-avatar { max-width: 240px; }
-      nav ul { gap: 16px; }
+      nav ul { gap: 12px; }
       nav ul a { font-size: .8rem; }
       .projects-grid { grid-template-columns: 1fr; }
       section { padding: 60px 0; }
+      .modal { padding: 24px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
   <nav>
     <div class="container">
-      <a href="#" class="logo"><span>&lt;</span>Home<span> /&gt;</span></a>
+      <a href="#" class="logo" id="nav-logo"><span>&lt;</span>Home<span> /&gt;</span></a>
       <ul>
         <li><a href="#about">关于</a></li>
         <li><a href="#skills">技能</a></li>
         <li><a href="#projects">项目</a></li>
         <li><a href="#contact">联系</a></li>
+        <li><a href="admin.html" class="admin-link">⚙</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero -->
   <section class="hero" id="home">
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-subtitle">Hi, I'm</div>
-        <h1>
-          <span>Your Name</span><br>
-          建造数字产品
-        </h1>
-        <p>
-          我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。
-          专注于 Web 开发、UI/UX 设计与性能优化。
-        </p>
-        <div class="hero-buttons">
-          <a href="#projects" class="btn btn-primary">查看作品</a>
-          <a href="#contact" class="btn btn-outline">联系我</a>
-        </div>
-      </div>
+      <div class="hero-content" id="hero-content"></div>
     </div>
   </section>
 
-  <!-- About -->
   <section class="about" id="about">
     <div class="container">
       <h2 class="section-title">关于我</h2>
-      <div class="about-grid">
-        <div class="about-avatar">YC</div>
-        <div class="about-text">
-          <h3>技术与创意的交汇点</h3>
-          <p>
-            我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。
-            我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。
-          </p>
-          <p>
-            工作之余，我喜欢写博客分享技术思考、参与开源项目，
-            以及探索摄影与设计带来的不同视角。
-          </p>
-          <dl class="about-info">
-            <div class="about-info-item">
-              <dt>姓名</dt>
-              <dd>Your Name</dd>
-            </div>
-            <div class="about-info-item">
-              <dt>所在地</dt>
-              <dd>中国 · 上海</dd>
-            </div>
-            <div class="about-info-item">
-              <dt>职业</dt>
-              <dd>全栈开发者</dd>
-            </div>
-            <div class="about-info-item">
-              <dt>邮箱</dt>
-              <dd>hello@example.com</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
+      <div class="about-grid" id="about-grid"></div>
     </div>
   </section>
 
-  <!-- Skills -->
   <section class="skills" id="skills">
     <div class="container">
       <h2 class="section-title">技能</h2>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="skill-icon">⚛️</div>
-          <h4>React</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:90%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🟦</div>
-          <h4>TypeScript</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:85%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🔷</div>
-          <h4>Vue</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:80%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🟢</div>
-          <h4>Node.js</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:85%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🐍</div>
-          <h4>Python</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:75%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🗄️</div>
-          <h4>SQL</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:80%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">☁️</div>
-          <h4>AWS</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:70%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🎨</div>
-          <h4>Figma</h4>
-          <div class="skill-level"><div class="skill-level-bar" style="width:75%"></div></div>
-        </div>
-      </div>
+      <div class="skills-grid" id="skills-grid"></div>
     </div>
   </section>
 
-  <!-- Projects -->
   <section class="projects" id="projects">
     <div class="container">
       <h2 class="section-title">项目</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-cover">📊</div>
-          <div class="project-body">
-            <h3>数据分析平台</h3>
-            <p>一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。</p>
-            <div class="project-tags">
-              <span>React</span><span>D3.js</span><span>WebSocket</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-card">
-          <div class="project-cover">🛒</div>
-          <div class="project-body">
-            <h3>电商后台管理</h3>
-            <p>全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。</p>
-            <div class="project-tags">
-              <span>Vue</span><span>Node.js</span><span>MongoDB</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-card">
-          <div class="project-cover">🤖</div>
-          <div class="project-body">
-            <h3>AI 助手工具</h3>
-            <p>集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。</p>
-            <div class="project-tags">
-              <span>Python</span><span>FastAPI</span><span>LLM</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="projects-grid" id="projects-grid"></div>
     </div>
   </section>
 
-  <!-- Contact -->
   <section class="contact" id="contact">
     <div class="container">
       <h2 class="section-title">联系我</h2>
-      <div class="contact-content">
-        <p>
-          如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。
-          我会尽快回复！
-        </p>
-        <div class="contact-links">
-          <a href="mailto:hello@example.com" class="contact-link">
-            ✉️ hello@example.com
-          </a>
-          <a href="#" class="contact-link">
-            💬 微信
-          </a>
-          <a href="https://github.com" target="_blank" class="contact-link">
-            🐙 GitHub
-          </a>
-        </div>
-      </div>
+      <div class="contact-content" id="contact-content"></div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <div class="container">
-      &copy; 2026 Your Name. Made with ❤️
-    </div>
+    <div class="container" id="footer-text"></div>
   </footer>
 
-  <!-- Smooth reveal on scroll -->
+  <!-- Project Detail Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div class="modal-icon" id="modal-icon"></div>
+      <h2 id="modal-title"></h2>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
   <script>
+    // ====== Default Data ======
+    const DEFAULT = {
+      hero: {
+        subtitle: "Hi, I'm",
+        name: "Your Name",
+        tagline: "建造数字产品",
+        description: "我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。专注于 Web 开发、UI/UX 设计与性能优化。",
+        primaryBtn: "查看作品",
+        primaryHref: "#projects",
+        secondaryBtn: "联系我",
+        secondaryHref: "#contact"
+      },
+      about: {
+        avatar: "YC",
+        title: "技术与创意的交汇点",
+        bio1: "我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。",
+        bio2: "工作之余，我喜欢写博客分享技术思考、参与开源项目，以及探索摄影与设计带来的不同视角。",
+        info: [
+          { label: "姓名", value: "Your Name" },
+          { label: "所在地", value: "中国 · 上海" },
+          { label: "职业", value: "全栈开发者" },
+          { label: "邮箱", value: "hello@example.com" }
+        ]
+      },
+      skills: [
+        { icon: "⚛️", name: "React", level: 90 },
+        { icon: "🟦", name: "TypeScript", level: 85 },
+        { icon: "🔷", name: "Vue", level: 80 },
+        { icon: "🟢", name: "Node.js", level: 85 },
+        { icon: "🐍", name: "Python", level: 75 },
+        { icon: "🗄️", name: "SQL", level: 80 },
+        { icon: "☁️", name: "AWS", level: 70 },
+        { icon: "🎨", name: "Figma", level: 75 }
+      ],
+      projects: [
+        {
+          icon: "📊",
+          title: "数据分析平台",
+          summary: "一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。",
+          tags: ["React", "D3.js", "WebSocket"],
+          detail: "这是一个全功能的数据分析平台，主要特点包括：\n\n• 多数据源接入：支持 MySQL、PostgreSQL、MongoDB 等主流数据库\n• 实时仪表盘：基于 WebSocket 实现毫秒级数据推送\n• 自定义图表：提供 20+ 种图表类型，支持拖拽布局\n• 团队协作：支持多人实时编辑、评论与分享\n\n项目采用微前端架构，前端使用 React + D3.js 实现数据可视化，后端基于 Node.js + Koa 构建微服务网关。"
+        },
+        {
+          icon: "🛒",
+          title: "电商后台管理",
+          summary: "全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。",
+          tags: ["Vue", "Node.js", "MongoDB"],
+          detail: "一套完整的电商后台管理系统，覆盖电商运营全流程：\n\n• 商品管理：支持多规格 SKU、批量导入、自动上架\n• 订单管理：全流程订单追踪，支持售后处理\n• 数据统计：可视化销售报表、用户增长分析\n• 权限控制：基于 RBAC 的细粒度权限管理\n\n前端使用 Vue 3 + Element Plus，后端使用 Node.js + Express + MongoDB，日均处理订单 10 万+。"
+        },
+        {
+          icon: "🤖",
+          title: "AI 助手工具",
+          summary: "集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。",
+          tags: ["Python", "FastAPI", "LLM"],
+          detail: "一个基于大语言模型的智能助手平台：\n\n• 文档问答：上传 PDF/Word 文档，自动提取关键信息进行问答\n• 代码生成：根据自然语言描述生成代码，支持多种编程语言\n• 自动化工作流：可配置的 AI 自动化流程，支持定时任务\n• 知识库管理：构建团队私有知识库，支持向量检索\n\n后端使用 Python FastAPI + LangChain 框架，支持对接 OpenAI、Claude 等多种模型。"
+        }
+      ],
+      contact: {
+        description: "如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。我会尽快回复！",
+        links: [
+          { icon: "✉️", label: "hello@example.com", href: "mailto:hello@example.com" },
+          { icon: "💬", label: "微信", href: "#" },
+          { icon: "🐙", label: "GitHub", href: "https://github.com" }
+        ]
+      },
+      footer: "© 2026 Your Name. Made with ❤️"
+    };
+
+    // ====== Load Data ======
+    function loadData() {
+      try {
+        const saved = localStorage.getItem('homepage_data');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      return DEFAULT;
+    }
+
+    const DATA = loadData();
+
+    // ====== Render ======
+    // Hero
+    const h = DATA.hero;
+    document.getElementById('hero-content').innerHTML = `
+      <div class="hero-subtitle">${h.subtitle}</div>
+      <h1><span>${h.name}</span><br>${h.tagline}</h1>
+      <p>${h.description}</p>
+      <div class="hero-buttons">
+        <a href="${h.primaryHref}" class="btn btn-primary">${h.primaryBtn}</a>
+        <a href="${h.secondaryHref}" class="btn btn-outline">${h.secondaryBtn}</a>
+      </div>
+    `;
+
+    // About
+    const a = DATA.about;
+    document.getElementById('about-grid').innerHTML = `
+      <div class="about-avatar">${a.avatar}</div>
+      <div class="about-text">
+        <h3>${a.title}</h3>
+        <p>${a.bio1}</p>
+        <p>${a.bio2}</p>
+        <dl class="about-info">
+          ${a.info.map(i => `
+            <div class="about-info-item"><dt>${i.label}</dt><dd>${i.value}</dd></div>
+          `).join('')}
+        </dl>
+      </div>
+    `;
+
+    // Skills
+    document.getElementById('skills-grid').innerHTML = DATA.skills.map(s => `
+      <div class="skill-card">
+        <div class="skill-icon">${s.icon}</div>
+        <h4>${s.name}</h4>
+        <div class="skill-level"><div class="skill-level-bar" style="width:${s.level}%"></div></div>
+      </div>
+    `).join('');
+
+    // Projects
+    document.getElementById('projects-grid').innerHTML = DATA.projects.map((p, i) => `
+      <div class="project-card" data-index="${i}">
+        <div class="project-cover">${p.icon}</div>
+        <div class="project-body">
+          <h3>${p.title}</h3>
+          <p>${p.summary}</p>
+          <div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+          <span class="project-detail-btn">查看详情 →</span>
+        </div>
+      </div>
+    `).join('');
+
+    // Contact
+    const c = DATA.contact;
+    document.getElementById('contact-content').innerHTML = `
+      <p>${c.description}</p>
+      <div class="contact-links">
+        ${c.links.map(l => `
+          <a href="${l.href}" target="_blank" class="contact-link">${l.icon} ${l.label}</a>
+        `).join('')}
+      </div>
+    `;
+
+    // Footer
+    document.getElementById('footer-text').textContent = DATA.footer;
+
+    // Page title
+    document.title = DATA.hero.name + ' 的个人主页';
+
+    // ====== Project Modal ======
+    const overlay = document.getElementById('modal-overlay');
+    const closeBtn = document.getElementById('modal-close');
+
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.index);
+        const p = DATA.projects[idx];
+        document.getElementById('modal-icon').textContent = p.icon;
+        document.getElementById('modal-title').textContent = p.title;
+        document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
+        document.getElementById('modal-body').textContent = p.detail || '暂无详细信息。';
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeModal() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ====== Scroll Reveal ======
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
