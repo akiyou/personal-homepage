@@ -1,150 +1,66 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>后台管理 — 个人主页</title>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
-      color: #1a1a2e; background: #f5f5f8; line-height: 1.6;
-    }
-    .app { display: flex; min-height: 100vh; }
-
-    /* Sidebar */
-    .sidebar {
-      width: 220px; background: #1a1a2e; color: #fff; padding: 24px 0;
-      position: sticky; top: 0; height: 100vh;
-    }
-    .sidebar h2 { padding: 0 20px 20px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
-    .sidebar h2 span { color: #8b8bf0; }
-    .sidebar nav { padding: 12px 0; }
-    .sidebar nav a {
-      display: block; padding: 10px 20px; color: rgba(255,255,255,.6);
-      font-size: .9rem; transition: all .2s; text-decoration: none;
-      border-left: 3px solid transparent;
-    }
-    .sidebar nav a:hover, .sidebar nav a.active {
-      color: #fff; background: rgba(255,255,255,.05); border-left-color: #5b5bd6;
-    }
-
-    /* Main */
-    .main { flex: 1; padding: 32px 40px; max-width: 960px; }
-    .main h1 { font-size: 1.5rem; margin-bottom: 28px; }
-
-    /* Sections */
-    .form-section {
-      background: #fff; border-radius: 12px; padding: 28px 32px;
-      margin-bottom: 24px; border: 1px solid #eee;
-    }
-    .form-section h3 {
-      font-size: 1.05rem; margin-bottom: 20px; padding-bottom: 12px;
-      border-bottom: 1px solid #f0f0f0; color: #5b5bd6;
-    }
-    .form-group { margin-bottom: 16px; }
-    .form-group label {
-      display: block; font-size: .85rem; font-weight: 600; margin-bottom: 6px; color: #555;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 10px 14px; border: 1.5px solid #e0e0e0;
-      border-radius: 8px; font-size: .9rem; font-family: inherit;
-      transition: border-color .2s; background: #fafafa;
-    }
-    .form-group input:focus, .form-group textarea:focus {
-      outline: none; border-color: #5b5bd6; background: #fff;
-    }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    /* Info items (about) */
-    .info-item-row {
-      display: grid; grid-template-columns: 80px 1fr 36px; gap: 8px;
-      align-items: center; margin-bottom: 8px;
-    }
-    .info-item-row input { padding: 8px 12px; border: 1.5px solid #e0e0e0; border-radius: 6px; font-size: .85rem; }
-    .info-item-row input:focus { outline: none; border-color: #5b5bd6; }
-
-    /* Array items (skills, projects) */
-    .array-item {
-      background: #f9f9fc; border-radius: 10px; padding: 20px;
-      margin-bottom: 16px; border: 1px solid #eee; position: relative;
-    }
-    .array-item .remove-btn {
-      position: absolute; top: 12px; right: 12px; width: 28px; height: 28px;
-      border-radius: 6px; border: none; background: #fee; color: #e55;
-      cursor: pointer; font-size: 1rem; transition: all .2s;
-    }
-    .array-item .remove-btn:hover { background: #fcc; }
-
-    .add-btn {
-      padding: 8px 20px; border: 1.5px dashed #ccc; border-radius: 8px;
-      background: transparent; color: #888; cursor: pointer; font-size: .85rem;
-      transition: all .2s; width: 100%;
-    }
-    .add-btn:hover { border-color: #5b5bd6; color: #5b5bd6; }
-
-    /* Tag input */
-    .tag-input-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-    .tag-input-wrap input { width: auto; flex: 1; min-width: 100px; }
-    .tag-input-wrap .tag {
-      display: inline-flex; align-items: center; gap: 4px;
-      background: #f0f0ff; color: #5b5bd6; padding: 4px 10px;
-      border-radius: 20px; font-size: .8rem;
-    }
-    .tag-input-wrap .tag .tag-remove {
-      cursor: pointer; font-weight: 700; font-size: 1rem;
-    }
-
-    /* Contact links */
-    .contact-link-row {
-      display: grid; grid-template-columns: 50px 1fr 1fr 36px; gap: 8px;
-      align-items: center; margin-bottom: 8px;
-    }
-    .contact-link-row input { padding: 8px 12px; border: 1.5px solid #e0e0e0; border-radius: 6px; font-size: .85rem; }
-    .contact-link-row input:focus { outline: none; border-color: #5b5bd6; }
-
-    /* Buttons */
-    .btn {
-      padding: 10px 28px; border-radius: 8px; border: none;
-      font-weight: 600; font-size: .9rem; cursor: pointer; transition: all .2s;
-    }
-    .btn-primary { background: #5b5bd6; color: #fff; }
-    .btn-primary:hover { background: #4a4abf; }
-    .btn-success { background: #22c55e; color: #fff; }
-    .btn-success:hover { background: #16a34a; }
-    .btn-outline { background: transparent; border: 1.5px solid #ddd; color: #555; }
-    .btn-outline:hover { border-color: #5b5bd6; color: #5b5bd6; }
-
-    .toolbar {
-      display: flex; gap: 12px; margin-top: 28px; padding-top: 20px;
-      border-top: 1px solid #eee; position: sticky; bottom: 0;
-      background: #f5f5f8; padding-bottom: 12px;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed; top: 24px; right: 24px; background: #22c55e; color: #fff;
-      padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: .9rem;
-      box-shadow: 0 8px 24px rgba(34,197,94,.3); z-index: 999;
-      animation: toastIn .3s ease-out, toastOut .3s ease-in 2s forwards;
-    }
-    @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
-
-    /* Sort handle */
-    .array-item { position: relative; }
-    .drag-handle {
-      position: absolute; top: 12px; right: 48px; cursor: move;
-      color: #ccc; font-size: 1.1rem;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar { display: none; }
-      .main { padding: 20px 16px; }
-      .form-row { grid-template-columns: 1fr; }
-      .form-section { padding: 20px 16px; }
-    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;color:#1a1a2e;background:#f5f5f8;line-height:1.6}
+    .app{display:flex;min-height:100vh}
+    .sidebar{width:220px;background:#1a1a2e;color:#fff;padding:24px 0;position:sticky;top:0;height:100vh}
+    .sidebar h2{padding:0 20px 20px;font-size:1.1rem;border-bottom:1px solid rgba(255,255,255,.1)}
+    .sidebar h2 span{color:#8b8bf0}
+    .sidebar nav{padding:12px 0}
+    .sidebar nav a{display:block;padding:10px 20px;color:rgba(255,255,255,.6);font-size:.9rem;transition:all .2s;text-decoration:none;border-left:3px solid transparent}
+    .sidebar nav a:hover,.sidebar nav a.active{color:#fff;background:rgba(255,255,255,.05);border-left-color:#5b5bd6}
+    .main{flex:1;padding:32px 40px;max-width:960px}
+    .main h1{font-size:1.5rem;margin-bottom:20px}
+    .token-bar{background:#fff5e6;border:1px solid #ffe0b2;border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .token-bar label{font-size:.85rem;font-weight:600;color:#e65100}
+    .token-bar input{flex:1;min-width:200px;padding:8px 12px;border:1.5px solid #ffe0b2;border-radius:6px;font-size:.85rem;background:#fff}
+    .token-bar input:focus{outline:none;border-color:#ff9800}
+    .token-bar .token-status{font-size:.8rem;color:#888}
+    .token-bar .token-status.ok{color:#22c55e}
+    .form-section{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:24px;border:1px solid #eee}
+    .form-section h3{font-size:1.05rem;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;color:#5b5bd6}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#555}
+    .form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:.9rem;font-family:inherit;transition:border-color .2s;background:#fafafa}
+    .form-group input:focus,.form-group textarea:focus{outline:none;border-color:#5b5bd6;background:#fff}
+    .form-group textarea{resize:vertical;min-height:80px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .info-item-row{display:grid;grid-template-columns:80px 1fr 36px;gap:8px;align-items:center;margin-bottom:8px}
+    .info-item-row input{padding:8px 12px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:.85rem}
+    .info-item-row input:focus{outline:none;border-color:#5b5bd6}
+    .array-item{background:#f9f9fc;border-radius:10px;padding:20px;margin-bottom:16px;border:1px solid #eee;position:relative}
+    .array-item .remove-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:6px;border:none;background:#fee;color:#e55;cursor:pointer;font-size:1rem;transition:all .2s}
+    .array-item .remove-btn:hover{background:#fcc}
+    .add-btn{padding:8px 20px;border:1.5px dashed #ccc;border-radius:8px;background:transparent;color:#888;cursor:pointer;font-size:.85rem;transition:all .2s;width:100%}
+    .add-btn:hover{border-color:#5b5bd6;color:#5b5bd6}
+    .tag-input-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .tag-input-wrap input{width:auto;flex:1;min-width:100px}
+    .tag-input-wrap .tag{display:inline-flex;align-items:center;gap:4px;background:#f0f0ff;color:#5b5bd6;padding:4px 10px;border-radius:20px;font-size:.8rem}
+    .tag-input-wrap .tag .tag-remove{cursor:pointer;font-weight:700;font-size:1rem}
+    .contact-link-row{display:grid;grid-template-columns:50px 1fr 1fr 36px;gap:8px;align-items:center;margin-bottom:8px}
+    .contact-link-row input{padding:8px 12px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:.85rem}
+    .contact-link-row input:focus{outline:none;border-color:#5b5bd6}
+    .btn{padding:10px 28px;border-radius:8px;border:none;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s}
+    .btn-primary{background:#5b5bd6;color:#fff}
+    .btn-primary:hover{background:#4a4abf}
+    .btn-success{background:#22c55e;color:#fff}
+    .btn-success:hover{background:#16a34a}
+    .btn-warning{background:#ff9800;color:#fff}
+    .btn-warning:hover{background:#f57c00}
+    .btn-outline{background:transparent;border:1.5px solid #ddd;color:#555}
+    .btn-outline:hover{border-color:#5b5bd6;color:#5b5bd6}
+    .toolbar{display:flex;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid #eee;position:sticky;bottom:0;background:#f5f5f8;padding-bottom:12px;flex-wrap:wrap}
+    .toast{position:fixed;top:24px;right:24px;color:#fff;padding:14px 24px;border-radius:10px;font-weight:600;font-size:.9rem;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:999;animation:toastIn .3s ease-out}
+    .toast.success{background:#22c55e}
+    .toast.error{background:#ef4444}
+    .toast.loading{background:#5b5bd6}
+    @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+    @media(max-width:768px){.sidebar{display:none}.main{padding:20px 16px}.form-row{grid-template-columns:1fr}.form-section{padding:20px 16px}.token-bar{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -152,7 +68,8 @@
   <aside class="sidebar">
     <h2><span>⚙</span> 后台管理</h2>
     <nav>
-      <a href="#hero" class="active">Hero</a>
+      <a href="#token" class="active">🔑 连接设置</a>
+      <a href="#hero">Hero</a>
       <a href="#about">关于我</a>
       <a href="#skills">技能</a>
       <a href="#projects">项目</a>
@@ -163,24 +80,35 @@
 
   <main class="main">
     <h1>编辑个人主页</h1>
-    <form id="admin-form">
 
-      <!-- Hero -->
+    <!-- Token Bar -->
+    <div class="token-bar" id="token">
+      <label>🔑 GitHub Token</label>
+      <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+      <button type="button" class="btn btn-warning" onclick="saveToken()">保存 Token</button>
+      <span class="token-status" id="token-status">未设置</span>
+    </div>
+
+    <p style="font-size:.85rem;color:#888;margin-bottom:24px">
+      数据将永久保存到 <code>data.json</code> 并提交到 GitHub 仓库。修改后 GitHub Pages 会在 1-2 分钟内自动更新。
+    </p>
+
+    <form id="admin-form">
       <section class="form-section" id="hero">
         <h3>Hero 区域</h3>
         <div class="form-row">
           <div class="form-group">
             <label>副标题（Subtitle）</label>
-            <input name="hero.subtitle" value="Hi, I'm">
+            <input name="hero.subtitle" />
           </div>
           <div class="form-group">
             <label>名字</label>
-            <input name="hero.name" value="Your Name">
+            <input name="hero.name" />
           </div>
         </div>
         <div class="form-group">
           <label>标语（Tagline）</label>
-          <input name="hero.tagline" value="建造数字产品">
+          <input name="hero.tagline" />
         </div>
         <div class="form-group">
           <label>描述</label>
@@ -189,26 +117,25 @@
         <div class="form-row">
           <div class="form-group">
             <label>主按钮文字</label>
-            <input name="hero.primaryBtn" value="查看作品">
+            <input name="hero.primaryBtn" />
           </div>
           <div class="form-group">
             <label>副按钮文字</label>
-            <input name="hero.secondaryBtn" value="联系我">
+            <input name="hero.secondaryBtn" />
           </div>
         </div>
       </section>
 
-      <!-- About -->
       <section class="form-section" id="about">
         <h3>关于我</h3>
         <div class="form-row">
           <div class="form-group">
-            <label>头像文字（如：YC）</label>
-            <input name="about.avatar" value="YC">
+            <label>头像文字</label>
+            <input name="about.avatar" />
           </div>
           <div class="form-group">
             <label>标题</label>
-            <input name="about.title" value="技术与创意的交汇点">
+            <input name="about.title" />
           </div>
         </div>
         <div class="form-group">
@@ -226,21 +153,18 @@
         </div>
       </section>
 
-      <!-- Skills -->
       <section class="form-section" id="skills">
         <h3>技能</h3>
         <div id="skills-list"></div>
         <button type="button" class="add-btn" onclick="addSkill()">+ 添加技能</button>
       </section>
 
-      <!-- Projects -->
       <section class="form-section" id="projects">
         <h3>项目</h3>
         <div id="projects-list"></div>
         <button type="button" class="add-btn" onclick="addProject()">+ 添加项目</button>
       </section>
 
-      <!-- Contact -->
       <section class="form-section" id="contact">
         <h3>联系</h3>
         <div class="form-group">
@@ -254,107 +178,169 @@
         </div>
       </section>
 
-      <!-- Footer -->
       <section class="form-section" id="footer">
         <h3>页脚</h3>
         <div class="form-group">
           <label>页脚文字</label>
-          <input name="footer" value="© 2026 Your Name. Made with ❤️">
+          <input name="footer" />
         </div>
       </section>
 
       <div class="toolbar">
-        <button type="submit" class="btn btn-primary">💾 保存</button>
+        <button type="submit" class="btn btn-primary" id="save-btn">💾 保存到 GitHub</button>
         <button type="button" class="btn btn-outline" onclick="resetData()">↺ 恢复默认</button>
-        <a href="index.html" target="_blank" class="btn btn-outline" style="text-decoration:none;">👁 预览</a>
+        <a href="https://akiyou.github.io/personal-homepage/" target="_blank" class="btn btn-outline" style="text-decoration:none">👁 预览主页</a>
       </div>
     </form>
   </main>
 </div>
 
 <script>
+  // ====== Config ======
+  const REPO_OWNER = 'akiyou';
+  const REPO_NAME = 'personal-homepage';
+  const DATA_PATH = 'data.json';
+  const RAW_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${DATA_PATH}`;
+
   // ====== Default Data ======
   const DEFAULT = {
     hero: {
       subtitle: "Hi, I'm",
-      name: "Your Name",
-      tagline: "建造数字产品",
-      description: "我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。专注于 Web 开发、UI/UX 设计与性能优化。",
-      primaryBtn: "查看作品",
-      primaryHref: "#projects",
-      secondaryBtn: "联系我",
-      secondaryHref: "#contact"
+      name: 'Your Name',
+      tagline: '建造数字产品',
+      description: '我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。专注于 Web 开发、UI/UX 设计与性能优化。',
+      primaryBtn: '查看作品',
+      primaryHref: '#projects',
+      secondaryBtn: '联系我',
+      secondaryHref: '#contact'
     },
     about: {
-      avatar: "YC",
-      title: "技术与创意的交汇点",
-      bio1: "我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。",
-      bio2: "工作之余，我喜欢写博客分享技术思考、参与开源项目，以及探索摄影与设计带来的不同视角。",
+      avatar: 'YC',
+      title: '技术与创意的交汇点',
+      bio1: '我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。',
+      bio2: '工作之余，我喜欢写博客分享技术思考、参与开源项目，以及探索摄影与设计带来的不同视角。',
       info: [
-        { label: "姓名", value: "Your Name" },
-        { label: "所在地", value: "中国 · 上海" },
-        { label: "职业", value: "全栈开发者" },
-        { label: "邮箱", value: "hello@example.com" }
+        { label: '姓名', value: 'Your Name' },
+        { label: '所在地', value: '中国 · 上海' },
+        { label: '职业', value: '全栈开发者' },
+        { label: '邮箱', value: 'hello@example.com' }
       ]
     },
     skills: [
-      { icon: "⚛️", name: "React", level: 90 },
-      { icon: "🟦", name: "TypeScript", level: 85 },
-      { icon: "🔷", name: "Vue", level: 80 },
-      { icon: "🟢", name: "Node.js", level: 85 },
-      { icon: "🐍", name: "Python", level: 75 },
-      { icon: "🗄️", name: "SQL", level: 80 },
-      { icon: "☁️", name: "AWS", level: 70 },
-      { icon: "🎨", name: "Figma", level: 75 }
+      { icon: '⚛️', name: 'React', level: 90 },
+      { icon: '🟦', name: 'TypeScript', level: 85 },
+      { icon: '🔷', name: 'Vue', level: 80 },
+      { icon: '🟢', name: 'Node.js', level: 85 },
+      { icon: '🐍', name: 'Python', level: 75 },
+      { icon: '🗄️', name: 'SQL', level: 80 },
+      { icon: '☁️', name: 'AWS', level: 70 },
+      { icon: '🎨', name: 'Figma', level: 75 }
     ],
     projects: [
-      {
-        icon: "📊", title: "数据分析平台",
-        summary: "一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。",
-        tags: ["React", "D3.js", "WebSocket"],
-        detail: "这是一个全功能的数据分析平台，主要特点包括：\n\n• 多数据源接入：支持 MySQL、PostgreSQL、MongoDB 等主流数据库\n• 实时仪表盘：基于 WebSocket 实现毫秒级数据推送\n• 自定义图表：提供 20+ 种图表类型，支持拖拽布局\n• 团队协作：支持多人实时编辑、评论与分享\n\n项目采用微前端架构，前端使用 React + D3.js 实现数据可视化，后端基于 Node.js + Koa 构建微服务网关。"
-      },
-      {
-        icon: "🛒", title: "电商后台管理",
-        summary: "全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。",
-        tags: ["Vue", "Node.js", "MongoDB"],
-        detail: "一套完整的电商后台管理系统，覆盖电商运营全流程：\n\n• 商品管理：支持多规格 SKU、批量导入、自动上架\n• 订单管理：全流程订单追踪，支持售后处理\n• 数据统计：可视化销售报表、用户增长分析\n• 权限控制：基于 RBAC 的细粒度权限管理\n\n前端使用 Vue 3 + Element Plus，后端使用 Node.js + Express + MongoDB，日均处理订单 10 万+。"
-      },
-      {
-        icon: "🤖", title: "AI 助手工具",
-        summary: "集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。",
-        tags: ["Python", "FastAPI", "LLM"],
-        detail: "一个基于大语言模型的智能助手平台：\n\n• 文档问答：上传 PDF/Word 文档，自动提取关键信息进行问答\n• 代码生成：根据自然语言描述生成代码，支持多种编程语言\n• 自动化工作流：可配置的 AI 自动化流程，支持定时任务\n• 知识库管理：构建团队私有知识库，支持向量检索\n\n后端使用 Python FastAPI + LangChain 框架，支持对接 OpenAI、Claude 等多种模型。"
-      }
+      { icon: '📊', title: '数据分析平台', summary: '一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。', tags: ['React', 'D3.js', 'WebSocket'], detail: '这是一个全功能的数据分析平台，主要特点包括：\n\n• 多数据源接入：支持 MySQL、PostgreSQL、MongoDB 等主流数据库\n• 实时仪表盘：基于 WebSocket 实现毫秒级数据推送\n• 自定义图表：提供 20+ 种图表类型，支持拖拽布局\n• 团队协作：支持多人实时编辑、评论与分享\n\n项目采用微前端架构，前端使用 React + D3.js 实现数据可视化，后端基于 Node.js + Koa 构建微服务网关。' },
+      { icon: '🛒', title: '电商后台管理', summary: '全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。', tags: ['Vue', 'Node.js', 'MongoDB'], detail: '一套完整的电商后台管理系统，覆盖电商运营全流程：\n\n• 商品管理：支持多规格 SKU、批量导入、自动上架\n• 订单管理：全流程订单追踪，支持售后处理\n• 数据统计：可视化销售报表、用户增长分析\n• 权限控制：基于 RBAC 的细粒度权限管理\n\n前端使用 Vue 3 + Element Plus，后端使用 Node.js + Express + MongoDB，日均处理订单 10 万+。' },
+      { icon: '🤖', title: 'AI 助手工具', summary: '集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。', tags: ['Python', 'FastAPI', 'LLM'], detail: '一个基于大语言模型的智能助手平台：\n\n• 文档问答：上传 PDF/Word 文档，自动提取关键信息进行问答\n• 代码生成：根据自然语言描述生成代码，支持多种编程语言\n• 自动化工作流：可配置的 AI 自动化流程，支持定时任务\n• 知识库管理：构建团队私有知识库，支持向量检索\n\n后端使用 Python FastAPI + LangChain 框架，支持对接 OpenAI、Claude 等多种模型。' }
     ],
     contact: {
-      description: "如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。我会尽快回复！",
+      description: '如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。我会尽快回复！',
       links: [
-        { icon: "✉️", label: "hello@example.com", href: "mailto:hello@example.com" },
-        { icon: "💬", label: "微信", href: "#" },
-        { icon: "🐙", label: "GitHub", href: "https://github.com" }
+        { icon: '✉️', label: 'hello@example.com', href: 'mailto:hello@example.com' },
+        { icon: '💬', label: '微信', href: '#' },
+        { icon: '🐙', label: 'GitHub', href: 'https://github.com' }
       ]
     },
-    footer: "© 2026 Your Name. Made with ❤️"
+    footer: '© 2026 Your Name. Made with ❤️'
   };
 
   let DATA;
+  let TOKEN = '';
 
+  // ====== Token Management ======
+  function loadToken() {
+    try {
+      const t = localStorage.getItem('gh_token');
+      if (t) { TOKEN = t; document.getElementById('github-token').value = t; }
+    } catch(e) {}
+    updateTokenStatus();
+  }
+
+  function saveToken() {
+    const val = document.getElementById('github-token').value.trim();
+    if (!val) return showToast('请输入 GitHub Token', 'error');
+    TOKEN = val;
+    localStorage.setItem('gh_token', val);
+    updateTokenStatus();
+    showToast('Token 已保存', 'success');
+  }
+
+  function updateTokenStatus() {
+    const el = document.getElementById('token-status');
+    if (TOKEN) {
+      el.className = 'token-status ok';
+      el.textContent = '✅ 已配置 (' + TOKEN.slice(0, 8) + '...)';
+    } else {
+      el.className = 'token-status';
+      el.textContent = '❌ 未设置';
+    }
+  }
+
+  // ====== GitHub API ======
+  async function getGitHubFileSha() {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`, {
+      headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github+json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.sha;
+  }
+
+  async function saveToGitHub(content) {
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const sha = await getGitHubFileSha();
+    const body = { message: 'update homepage data via admin panel', content: encoded };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }
+
+  // ====== Data Loading ======
   function loadData() {
+    // Try GitHub raw first
+    fetch(RAW_URL + '?t=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json(); })
+      .then(d => { DATA = d; bindForm(); showToast('已加载 GitHub 数据', 'success'); })
+      .catch(() => {
+        // Fallback to localStorage
+        try {
+          const saved = localStorage.getItem('homepage_data');
+          if (saved) { DATA = JSON.parse(saved); bindForm(); return; }
+        } catch(e) {}
+        // Fallback to defaults
+        DATA = JSON.parse(JSON.stringify(DEFAULT));
+        bindForm();
+      });
+  }
+
+  function loadDataSync() {
     try {
       const saved = localStorage.getItem('homepage_data');
       if (saved) return JSON.parse(saved);
-    } catch (e) {}
+    } catch(e) {}
     return JSON.parse(JSON.stringify(DEFAULT));
-  }
-
-  function saveData() {
-    localStorage.setItem('homepage_data', JSON.stringify(DATA));
   }
 
   // ====== Form Binding ======
   function bindForm() {
-    // Simple key-based fields
     const map = {
       'hero.subtitle': () => DATA.hero.subtitle,
       'hero.name': () => DATA.hero.name,
@@ -373,7 +359,6 @@
       const el = document.querySelector(`[name="${key}"]`);
       if (el) el.value = map[key]();
     });
-
     renderAboutInfo();
     renderSkills();
     renderProjects();
@@ -395,7 +380,6 @@
     DATA.footer = get('footer');
     DATA.contact.description = get('contact.description');
 
-    // About info
     const infoItems = document.querySelectorAll('#about-info-list .info-item-row');
     DATA.about.info = [];
     infoItems.forEach(row => {
@@ -403,7 +387,6 @@
       DATA.about.info.push({ label: inputs[0].value, value: inputs[1].value });
     });
 
-    // Skills
     const skillItems = document.querySelectorAll('#skills-list .array-item');
     DATA.skills = [];
     skillItems.forEach(item => {
@@ -411,20 +394,18 @@
       DATA.skills.push({ icon: inputs[0].value, name: inputs[1].value, level: parseInt(inputs[2].value) || 0 });
     });
 
-    // Projects
     const projItems = document.querySelectorAll('#projects-list .array-item');
     DATA.projects = [];
     projItems.forEach(item => {
-      const icon = item.querySelector('.proj-icon').value;
-      const title = item.querySelector('.proj-title').value;
-      const summary = item.querySelector('.proj-summary').value;
-      const detail = item.querySelector('.proj-detail').value;
-      const tagEls = item.querySelectorAll('.tag-body');
-      const tags = Array.from(tagEls).map(el => el.textContent);
-      DATA.projects.push({ icon, title, summary, tags, detail });
+      DATA.projects.push({
+        icon: item.querySelector('.proj-icon').value,
+        title: item.querySelector('.proj-title').value,
+        summary: item.querySelector('.proj-summary').value,
+        tags: Array.from(item.querySelectorAll('.tag-body')).map(el => el.textContent),
+        detail: item.querySelector('.proj-detail').value
+      });
     });
 
-    // Contact links
     const linkItems = document.querySelectorAll('#contact-links-list .contact-link-row');
     DATA.contact.links = [];
     linkItems.forEach(row => {
@@ -433,162 +414,155 @@
     });
   }
 
-  // ====== About Info ======
+  // ====== Render Helpers ======
   function renderAboutInfo() {
     const list = document.getElementById('about-info-list');
     list.innerHTML = DATA.about.info.map((item, i) => `
       <div class="info-item-row">
-        <input value="${escapeHtml(item.label)}" placeholder="标签">
-        <input value="${escapeHtml(item.value)}" placeholder="值">
-        <button type="button" class="remove-btn" onclick="removeItem(this, 'about.info', ${i})">✕</button>
+        <input value="${esc(item.label)}" placeholder="标签">
+        <input value="${esc(item.value)}" placeholder="值">
+        <button type="button" class="remove-btn" onclick="removeItem(this,'about.info',${i})">✕</button>
       </div>
     `).join('');
   }
 
-  function addInfoItem() {
-    DATA.about.info.push({ label: '', value: '' });
-    renderAboutInfo();
-  }
+  function addInfoItem(){DATA.about.info.push({label:'',value:''});renderAboutInfo()}
 
-  // ====== Skills ======
   function renderSkills() {
     const list = document.getElementById('skills-list');
-    list.innerHTML = DATA.skills.map((s, i) => `
+    list.innerHTML = DATA.skills.map((s,i) => `
       <div class="array-item">
         <div class="form-row">
           <div class="form-group">
             <label>图标 Emoji</label>
-            <input value="${escapeHtml(s.icon)}" placeholder="如: ⚛️" class="skill-icon-input">
+            <input value="${esc(s.icon)}" placeholder="如: ⚛️">
           </div>
           <div class="form-group">
             <label>名称</label>
-            <input value="${escapeHtml(s.name)}" placeholder="如: React" class="skill-name-input">
+            <input value="${esc(s.name)}" placeholder="如: React">
           </div>
         </div>
         <div class="form-group">
           <label>熟练度 (0-100)</label>
-          <input type="range" min="0" max="100" value="${s.level}" class="skill-level-input"
-                 oninput="this.nextElementSibling.textContent=this.value">
-          <span style="font-size:.85rem;color:#888;margin-left:8px;">${s.level}</span>
+          <input type="range" min="0" max="100" value="${s.level}" oninput="this.nextElementSibling.textContent=this.value">
+          <span style="font-size:.85rem;color:#888;margin-left:8px">${s.level}</span>
         </div>
-        <button type="button" class="remove-btn" onclick="removeItem(this, 'skills', ${i})">✕</button>
+        <button type="button" class="remove-btn" onclick="removeItem(this,'skills',${i})">✕</button>
       </div>
     `).join('');
   }
 
-  function addSkill() {
-    DATA.skills.push({ icon: '⭐', name: '', level: 50 });
-    renderSkills();
-  }
+  function addSkill(){DATA.skills.push({icon:'⭐',name:'',level:50});renderSkills()}
 
-  // ====== Projects ======
   function renderProjects() {
     const list = document.getElementById('projects-list');
-    list.innerHTML = DATA.projects.map((p, i) => `
+    list.innerHTML = DATA.projects.map((p,i) => `
       <div class="array-item">
         <div class="form-row">
           <div class="form-group">
             <label>图标 Emoji</label>
-            <input value="${escapeHtml(p.icon)}" class="proj-icon">
+            <input value="${esc(p.icon)}" class="proj-icon">
           </div>
           <div class="form-group">
             <label>标题</label>
-            <input value="${escapeHtml(p.title)}" class="proj-title">
+            <input value="${esc(p.title)}" class="proj-title">
           </div>
         </div>
         <div class="form-group">
           <label>摘要</label>
-          <textarea rows="2" class="proj-summary">${escapeHtml(p.summary)}</textarea>
+          <textarea rows="2" class="proj-summary">${esc(p.summary)}</textarea>
         </div>
         <div class="form-group">
-          <label>标签（点击 ✕ 删除，Enter 添加）</label>
+          <label>标签</label>
           <div class="tag-input-wrap">
-            ${p.tags.map(t => `<span class="tag"><span class="tag-body">${escapeHtml(t)}</span><span class="tag-remove" onclick="this.parentElement.remove()">✕</span></span>`).join('')}
-            <input placeholder="输入标签后按 Enter" onkeydown="if(event.key==='Enter'){addTag(this, ${i});event.preventDefault()}">
+            ${p.tags.map(t => `<span class="tag"><span class="tag-body">${esc(t)}</span><span class="tag-remove" onclick="this.parentElement.remove()">✕</span></span>`).join('')}
+            <input placeholder="Enter 添加" onkeydown="if(event.key==='Enter'){addTag(this,${i});event.preventDefault()}">
           </div>
         </div>
         <div class="form-group">
-          <label>详情（支持多行文本）</label>
-          <textarea rows="4" class="proj-detail">${escapeHtml(p.detail || '')}</textarea>
+          <label>详情（支持多行）</label>
+          <textarea rows="4" class="proj-detail">${esc(p.detail||'')}</textarea>
         </div>
-        <button type="button" class="remove-btn" onclick="removeItem(this, 'projects', ${i})">✕</button>
+        <button type="button" class="remove-btn" onclick="removeItem(this,'projects',${i})">✕</button>
       </div>
     `).join('');
   }
 
-  function addTag(input, idx) {
-    const val = input.value.trim();
-    if (!val) return;
-    DATA.projects[idx].tags.push(val);
-    renderProjects();
-  }
+  function addTag(input,idx){const v=input.value.trim();if(!v)return;DATA.projects[idx].tags.push(v);renderProjects()}
+  function addProject(){DATA.projects.push({icon:'📦',title:'',summary:'',tags:[],detail:''});renderProjects()}
 
-  function addProject() {
-    DATA.projects.push({ icon: '📦', title: '', summary: '', tags: [], detail: '' });
-    renderProjects();
-  }
-
-  // ====== Contact Links ======
   function renderContactLinks() {
     const list = document.getElementById('contact-links-list');
-    list.innerHTML = DATA.contact.links.map((l, i) => `
+    list.innerHTML = DATA.contact.links.map((l,i) => `
       <div class="contact-link-row">
-        <input value="${escapeHtml(l.icon)}" placeholder="图标">
-        <input value="${escapeHtml(l.label)}" placeholder="名称">
-        <input value="${escapeHtml(l.href)}" placeholder="链接">
-        <button type="button" class="remove-btn" onclick="removeItem(this, 'contact.links', ${i})">✕</button>
+        <input value="${esc(l.icon)}" placeholder="图标">
+        <input value="${esc(l.label)}" placeholder="名称">
+        <input value="${esc(l.href)}" placeholder="链接">
+        <button type="button" class="remove-btn" onclick="removeItem(this,'contact.links',${i})">✕</button>
       </div>
     `).join('');
   }
 
-  function addContactLink() {
-    DATA.contact.links.push({ icon: '🔗', label: '', href: '#' });
-    renderContactLinks();
-  }
+  function addContactLink(){DATA.contact.links.push({icon:'🔗',label:'',href:'#'});renderContactLinks()}
 
-  // ====== Remove Item ======
-  function removeItem(btn, path, idx) {
+  function removeItem(btn,path,idx) {
     const keys = path.split('.');
     let obj = DATA;
-    for (let i = 0; i < keys.length; i++) obj = obj[keys[i]];
-    obj.splice(idx, 1);
-    if (path === 'skills') renderSkills();
-    else if (path === 'projects') renderProjects();
-    else if (path === 'contact.links') renderContactLinks();
-    else if (path === 'about.info') renderAboutInfo();
+    for(let i=0;i<keys.length-1;i++) obj = obj[keys[i]];
+    const lastKey = keys[keys.length-1];
+    // Find which array we're in by looking at the parent's matching array
+    // Since path like 'skills' -> DATA.skills
+    const arr = obj[lastKey] || obj;
+    arr.splice(idx,1);
+    if(path==='skills')renderSkills();else if(path==='projects')renderProjects();else if(path==='contact.links')renderContactLinks();else if(path==='about.info')renderAboutInfo();
   }
 
-  // ====== Utility ======
-  function escapeHtml(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-  }
+  function esc(str){return(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
   // ====== Toast ======
-  function showToast(msg) {
+  function showToast(msg, type='success') {
     const t = document.createElement('div');
-    t.className = 'toast'; t.textContent = msg;
+    t.className = 'toast ' + type;
+    t.textContent = msg;
     document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2500);
+    setTimeout(() => t.remove(), 3000);
   }
 
   // ====== Submit ======
-  document.getElementById('admin-form').addEventListener('submit', e => {
+  document.getElementById('admin-form').addEventListener('submit', async e => {
     e.preventDefault();
+    if (!TOKEN) return showToast('请先设置 GitHub Token', 'error');
+
     collectForm();
-    saveData();
-    showToast('✅ 保存成功！打开主页查看效果');
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ 保存中...';
+
+    try {
+      const json = JSON.stringify(DATA, null, 2);
+      await saveToGitHub(json);
+      // Also save to localStorage as cache
+      localStorage.setItem('homepage_data', JSON.stringify(DATA));
+      showToast('✅ 已提交到 GitHub！1-2 分钟后主页自动更新', 'success');
+    } catch (err) {
+      showToast('❌ 保存失败: ' + err.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '💾 保存到 GitHub';
+    }
   });
 
   // ====== Reset ======
   function resetData() {
-    if (!confirm('确定恢复为默认数据？当前修改将丢失。')) return;
-    localStorage.removeItem('homepage_data');
+    if (!confirm('确定恢复默认数据？当前修改将丢失。')) return;
     DATA = JSON.parse(JSON.stringify(DEFAULT));
     bindForm();
-    showToast('已恢复默认数据');
+    saveToGitHub(JSON.stringify(DATA, null, 2)).then(() => {
+      showToast('已重置并提交到 GitHub', 'success');
+    }).catch(() => showToast('已重置（本地），GitHub 同步失败，请检查 Token', 'error'));
   }
 
-  // ====== Sidebar nav ======
+  // ====== Sidebar ======
   document.querySelectorAll('.sidebar nav a').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
@@ -600,8 +574,11 @@
   });
 
   // ====== Init ======
-  DATA = loadData();
+  loadToken();
+  DATA = loadDataSync();
   bindForm();
+  // Then try to load fresh data from GitHub
+  loadData();
 </script>
 </body>
 </html>
