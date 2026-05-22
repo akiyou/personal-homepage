@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "subtitle": "Hi, I'm",
+    "name": "Your Name",
+    "tagline": "建造数字产品",
+    "description": "我是一名全栈开发者，热衷于用技术创造优雅、高效的数字化体验。专注于 Web 开发、UI/UX 设计与性能优化。",
+    "primaryBtn": "查看作品",
+    "primaryHref": "#projects",
+    "secondaryBtn": "联系我",
+    "secondaryHref": "#contact"
+  },
+  "about": {
+    "avatar": "YC",
+    "title": "技术与创意的交汇点",
+    "bio1": "我拥有 X 年以上的软件开发经验，曾参与多个从零到一的项目。我相信好的代码不仅是功能的实现，更是对用户体验的深刻理解。",
+    "bio2": "工作之余，我喜欢写博客分享技术思考、参与开源项目，以及探索摄影与设计带来的不同视角。",
+    "info": [
+      { "label": "姓名", "value": "Your Name" },
+      { "label": "所在地", "value": "中国 · 上海" },
+      { "label": "职业", "value": "全栈开发者" },
+      { "label": "邮箱", "value": "hello@example.com" }
+    ]
+  },
+  "skills": [
+    { "icon": "⚛️", "name": "React", "level": 90 },
+    { "icon": "🟦", "name": "TypeScript", "level": 85 },
+    { "icon": "🔷", "name": "Vue", "level": 80 },
+    { "icon": "🟢", "name": "Node.js", "level": 85 },
+    { "icon": "🐍", "name": "Python", "level": 75 },
+    { "icon": "🗄️", "name": "SQL", "level": 80 },
+    { "icon": "☁️", "name": "AWS", "level": 70 },
+    { "icon": "🎨", "name": "Figma", "level": 75 }
+  ],
+  "projects": [
+    {
+      "icon": "📊",
+      "title": "数据分析平台",
+      "summary": "一个实时数据分析仪表盘，支持多数据源接入、自定义图表和团队协作。",
+      "tags": ["React", "D3.js", "WebSocket"],
+      "detail": "这是一个全功能的数据分析平台，主要特点包括：\n\n• 多数据源接入：支持 MySQL、PostgreSQL、MongoDB 等主流数据库\n• 实时仪表盘：基于 WebSocket 实现毫秒级数据推送\n• 自定义图表：提供 20+ 种图表类型，支持拖拽布局\n• 团队协作：支持多人实时编辑、评论与分享\n\n项目采用微前端架构，前端使用 React + D3.js 实现数据可视化，后端基于 Node.js + Koa 构建微服务网关。"
+    },
+    {
+      "icon": "🛒",
+      "title": "电商后台管理",
+      "summary": "全功能电商后台系统，包括商品管理、订单流转、数据统计与权限控制。",
+      "tags": ["Vue", "Node.js", "MongoDB"],
+      "detail": "一套完整的电商后台管理系统，覆盖电商运营全流程：\n\n• 商品管理：支持多规格 SKU、批量导入、自动上架\n• 订单管理：全流程订单追踪，支持售后处理\n• 数据统计：可视化销售报表、用户增长分析\n• 权限控制：基于 RBAC 的细粒度权限管理\n\n前端使用 Vue 3 + Element Plus，后端使用 Node.js + Express + MongoDB，日均处理订单 10 万+。"
+    },
+    {
+      "icon": "🤖",
+      "title": "AI 助手工具",
+      "summary": "集成大语言模型的智能助手，支持文档问答、代码生成与自动化工作流。",
+      "tags": ["Python", "FastAPI", "LLM"],
+      "detail": "一个基于大语言模型的智能助手平台：\n\n• 文档问答：上传 PDF/Word 文档，自动提取关键信息进行问答\n• 代码生成：根据自然语言描述生成代码，支持多种编程语言\n• 自动化工作流：可配置的 AI 自动化流程，支持定时任务\n• 知识库管理：构建团队私有知识库，支持向量检索\n\n后端使用 Python FastAPI + LangChain 框架，支持对接 OpenAI、Claude 等多种模型。"
+    }
+  ],
+  "contact": {
+    "description": "如果您有合作意向或者只是想打个招呼，欢迎通过以下方式联系我。我会尽快回复！",
+    "links": [
+      { "icon": "✉️", "label": "hello@example.com", "href": "mailto:hello@example.com" },
+      { "icon": "💬", "label": "微信", "href": "#" },
+      { "icon": "🐙", "label": "GitHub", "href": "https://github.com" }
+    ]
+  },
+  "footer": "© 2026 Your Name. Made with ❤️"
+}
